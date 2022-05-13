@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "title": "Opening Hours",
+        "text": "Long Opening hours for serving working patients also",
+        "background": "Gradient"
+    },
+    {
+        "id": 2,
+        "title": "Visit Our Location",
+        "text": "Yokohama, Asahi ku, Japan;",
+        "background": "Gradient"
+    },
+    {
+        "id": 3,
+        "title": "Call us Now",
+        "text": "+0092880379",
+        "background": "Gradient"
+    }
+]

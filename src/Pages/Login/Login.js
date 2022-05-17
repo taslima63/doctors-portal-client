@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useSendPasswordResetEmail, useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import { useForm } from "react-hook-form";
 import Loading from '../Shared/Loading';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Login = () => {
     const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
@@ -19,6 +20,8 @@ const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
     let from = location.state?.from?.pathname || "/";
+    const [sendPasswordResetEmail, sending, ResetError] = useSendPasswordResetEmail(auth);
+
 
     useEffect(() => {
         if (user || gUser) {
@@ -26,13 +29,24 @@ const Login = () => {
         }
     }, [user, gUser, from, navigate])
 
-    if (loading || gLoading) {
+    if (loading || gLoading || sending) {
         return <Loading></Loading>
     }
 
-    if (error || gError) {
-        signInError = <p className='text-red-500'><small>{error?.message || gError?.message}</small></p>
+    if (error || gError || ResetError) {
+        signInError = <p className='text-red-500'><small>{error?.message || gError?.message || ResetError?.message}</small></p>
     }
+
+    // const handlePasswordReset = async() = {
+    //     const resetEmail = data.email;
+    //     if (email) {
+    //         await sendPasswordResetEmail(email);
+    //         toast('Email has been sent to reset passwword');
+    //     } else {
+    //         toast('Please enter your email address');
+    //     }
+
+    // }
 
     const onSubmit = data => {
         signInWithEmailAndPassword(data.email, data.password);
@@ -97,6 +111,7 @@ const Login = () => {
                         {signInError}
                         <input className='btn w-full max-w-xs text-white' type="submit" value="Login" />
                     </form>
+                    {/* <p><small>Forgot Password?<Link className='text-primary' >Reset Password</Link></small></p> */}
                     <p><small>New to Doctors Portal <Link className='text-primary' to="/signup">Create New Account</Link></small></p>
                     <div className="divider">OR</div>
                     <button

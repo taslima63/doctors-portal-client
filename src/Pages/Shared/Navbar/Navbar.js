@@ -14,13 +14,16 @@ const Navbar = () => {
 
     const menuItems = <>
         <li><Link to='/'>Home</Link></li>
-        <li><Link to='/about'>About</Link></li>
-        <li><Link to='/appointment'>Appointment</Link></li>
-        <li><Link to='/reviews'>Reviews</Link></li>
-        <li><Link to='/contactUs'>Contact</Link></li>
         {
-            user && <li><Link to='/dashboard'>Dashboard</Link></li>
+            user &&
+            <>
+                <li><Link to='/appointment'>Appointment</Link></li>
+                <li><Link to='/dashboard'>Dashboard</Link></li></>
         }
+        <li><Link to='/reviews'>Reviews</Link></li>
+        <li><Link to='/about'>About</Link></li>
+        <li><Link to='/contactUs'>Contact</Link></li>
+
 
         <li>{user ? <button className="btn btn-ghost font-normal" onClick={logout}>Logout</button> : <Link to='/login'>Login</Link>}</li>
     </>

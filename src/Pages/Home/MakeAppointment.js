@@ -2,6 +2,7 @@ import React from 'react';
 import doctor from './../../assets/images/doctor.png';
 import appointment from './../../assets/images/appointment.png';
 import ButtonPrimary from '../Shared/ButtonPrimary/ButtonPrimary';
+import { Link } from 'react-router-dom';
 
 const MakeAppointment = () => {
     return (
@@ -17,7 +18,7 @@ const MakeAppointment = () => {
                 <h3 className='text-xl text-primary font-bold'>Appointment</h3>
                 <h2 className='text-3xl text-white'>Make An Appointment Today</h2>
                 <p className='text-white my-5'>Specialists, like psychiatrists, dentists, gynaecologists and pediatricians, require appointments in advance.Physical examination services (such as for company medicals) also requires an appointment to be booked well in advance. </p>
-                <ButtonPrimary text="Appointment" />
+                <Link className='btn btn-primary uppercase text-white font-bold bg-gradient-to-r from-secondary to-primary ' to="/appointment" text="Appointment">Make An Appoinment</Link>
             </div>
         </section>
     );

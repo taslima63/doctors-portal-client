@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import Loading from '../Shared/Loading';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import useToken from '../../hooks/useToken';
 
 const Login = () => {
     const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
@@ -21,13 +22,13 @@ const Login = () => {
     const location = useLocation();
     let from = location.state?.from?.pathname || "/";
     const [sendPasswordResetEmail, sending, ResetError] = useSendPasswordResetEmail(auth);
-
+    const [token] = useToken(user || gUser);
 
     useEffect(() => {
-        if (user || gUser) {
+        if (token) {
             navigate(from, { replace: true });
         }
-    }, [user, gUser, from, navigate])
+    }, [token, from, navigate])
 
     if (loading || gLoading || sending) {
         return <Loading></Loading>
@@ -37,16 +38,6 @@ const Login = () => {
         signInError = <p className='text-red-500'><small>{error?.message || gError?.message || ResetError?.message}</small></p>
     }
 
-    // const handlePasswordReset = async() = {
-    //     const resetEmail = data.email;
-    //     if (email) {
-    //         await sendPasswordResetEmail(email);
-    //         toast('Email has been sent to reset passwword');
-    //     } else {
-    //         toast('Please enter your email address');
-    //     }
-
-    // }
 
     const onSubmit = data => {
         signInWithEmailAndPassword(data.email, data.password);
